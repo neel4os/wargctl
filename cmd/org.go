@@ -18,7 +18,7 @@ var orgCmd = &cobra.Command{
 		name, _ := cmd.Flags().GetString("name")
 		description, _ := cmd.Flags().GetString("description")
 		payload := map[string]interface{}{"name": name, "description": description}
-		util.NewWargCtlResponse().Post("/organization", payload)
+		util.NewWargCtlResponse().Post("/organization/", payload)
 	},
 }
 

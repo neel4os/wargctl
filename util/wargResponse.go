@@ -40,8 +40,7 @@ type Org struct {
 
 func (w *wargCtlResponse) Post(path string, body map[string]interface{}) {
 	resp, error := w.client.R().SetBody(body).Post(path)
-	fmt.Println(resp, resp.IsSuccess(), resp.StatusCode(), resp.String())
-	if resp.IsSuccess() {
+	if resp.StatusCode() > 0 {
 		TablePrinter{resp.Body()}.Print()
 	} else {
 		fmt.Println(error)
