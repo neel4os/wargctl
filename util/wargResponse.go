@@ -7,6 +7,7 @@ import (
 
 type methods interface {
 	Post(path string, payload map[string]interface{})
+	Get(path string)
 }
 
 var instantiated *wargCtlResponse = nil
@@ -29,22 +30,22 @@ func (w *wargCtlResponse) SetBaseUrl(baseurl string) *wargCtlResponse {
 	return w
 }
 
-type Org struct {
-	name               string
-	description        string
-	organizationId     string
-	creation_time      string
-	last_modified_time string
-	version            int
-}
-
 func (w *wargCtlResponse) Post(path string, body map[string]interface{}) {
 	resp, error := w.client.R().SetBody(body).Post(path)
-	fmt.Println(resp, resp.IsSuccess(), resp.StatusCode(), resp.String())
-	if resp.IsSuccess() {
+	if resp.StatusCode() > 0 {
 		TablePrinter{resp.Body()}.Print()
 	} else {
 		fmt.Println(error)
+	}
+
+}
+
+func (w wargCtlResponse) Get(path string) {
+	resp, err := w.client.R().Get(path)
+	if resp.StatusCode() > 0 {
+		TablePrinter{resp.Body()}.Print()
+	} else {
+		fmt.Println(err)
 	}
 
 }
