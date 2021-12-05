@@ -10,10 +10,11 @@ var GetOrgCmd = &cobra.Command{
 	Short: "get the org",
 	Run: func(cmd *cobra.Command, args []string) {
 		id, _ := cmd.Flags().GetString("id")
+		path := "/organization/"
 		if id != "" {
-			path := "/organization/" + id
-			util.NewWargCtlResponse().Get(path)
+			path = path + id
 		}
+		util.NewWargCtlResponse().Get(path)
 	}}
 
 func init() {
