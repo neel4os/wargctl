@@ -40,6 +40,15 @@ func (w *wargCtlResponse) Post(path string, body map[string]interface{}) {
 
 }
 
+func (w *wargCtlResponse) Update(path string, body map[string]interface{}) {
+	resp, error := w.client.R().SetBody(body).Patch(path)
+	if resp.StatusCode() > 0 {
+		TablePrinter{resp.Body()}.Print()
+	} else {
+		fmt.Println(error)
+	}
+}
+
 func (w wargCtlResponse) Get(path string) {
 	resp, err := w.client.R().Get(path)
 	if resp.StatusCode() > 0 {
