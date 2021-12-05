@@ -49,6 +49,13 @@ func (w *wargCtlResponse) Update(path string, body map[string]interface{}) {
 	}
 }
 
+func (w *wargCtlResponse) Delete(path string) {
+	resp, error := w.client.R().Delete(path)
+	if resp.StatusCode() == 0 {
+		fmt.Println(error)
+	}
+}
+
 func (w wargCtlResponse) Get(path string) {
 	resp, err := w.client.R().Get(path)
 	if resp.StatusCode() > 0 {
