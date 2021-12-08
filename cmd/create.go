@@ -10,11 +10,12 @@ var createCmd = &cobra.Command{
 	Use:   "create",
 	Short: "create a resource when resource is defined",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Error: must also specify a resource. Options are org")
+		fmt.Println("Error: must also specify a resource.")
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(createCmd)
 	createCmd.AddCommand(create.CrateOrgCmd)
+	createCmd.AddCommand(create.CreateWsCmd)
 }

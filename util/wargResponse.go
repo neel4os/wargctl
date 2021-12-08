@@ -8,6 +8,8 @@ import (
 type methods interface {
 	Post(path string, payload map[string]interface{})
 	Get(path string)
+	Update(path string, payload map[string]interface{})
+	Delete(path string)
 }
 
 var instantiated *wargCtlResponse = nil
