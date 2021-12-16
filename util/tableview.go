@@ -2,6 +2,7 @@ package util
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/olekukonko/tablewriter"
 	"os"
 	"sort"
@@ -34,16 +35,20 @@ func (receiver TablePrinter) createStructureTable(jnm *jsonmap, fv bool) ([][]st
 			c = append(c, d)
 		case []interface{}:
 			sjnm := (*jnm)[v]
-			header = getKeys(sjnm.([]interface{})[0].(jsonmap))
-			for _, iter := range sjnm.([]interface{}) {
-				//for _, sk := range header {
-				d := make([]string, 0)
-				t := iter.(jsonmap)
-				c1, _ := receiver.createStructureTable(&t, false)
-				for _, value := range c1 {
-					d = append(d, value[0])
+			if len(sjnm.([]interface{})) > 0 {
+				header = getKeys(sjnm.([]interface{})[0].(jsonmap))
+				for _, iter := range sjnm.([]interface{}) {
+					//for _, sk := range header {
+					d := make([]string, 0)
+					t := iter.(jsonmap)
+					c1, _ := receiver.createStructureTable(&t, false)
+					for _, value := range c1 {
+						d = append(d, value[0])
+					}
+					c = append(c, d)
 				}
-				c = append(c, d)
+			} else {
+				panic(keys)
 			}
 		}
 	}
@@ -56,6 +61,11 @@ func (receiver TablePrinter) createStructureTable(jnm *jsonmap, fv bool) ([][]st
 }
 
 func (receiver TablePrinter) Print() {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("No", r.([]string)[0], "exist.")
+		}
+	}()
 	jsonPayload := receiver.convertMap()
 	arr, headers := receiver.createStructureTable(jsonPayload, true)
 	table := receiver.setTable(headers)
