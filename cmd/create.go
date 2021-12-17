@@ -19,4 +19,5 @@ func init() {
 	createCmd.AddCommand(create.CrateOrgCmd)
 	createCmd.AddCommand(create.CreateWsCmd)
 	createCmd.AddCommand(create.CrateTemplateCmd)
+	createCmd.AddCommand(create.CreateExpCmd)
 }

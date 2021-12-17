@@ -8,9 +8,9 @@ import (
 )
 
 type Experiment struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Method      []string
+	Title       string   `json:"title"`
+	Description string   `json:"description"`
+	Method      []string `json:"method"`
 }
 
 var CrateTemplateCmd = &cobra.Command{
@@ -25,7 +25,12 @@ var CrateTemplateCmd = &cobra.Command{
 		if error != nil {
 			fmt.Println(error)
 		}
-		ioutil.WriteFile(filename, data, 0644)
+		err := ioutil.WriteFile(filename, data, 0644)
+		if err != nil {
+			fmt.Println(filename + " can not be created because")
+			fmt.Println(err)
+		}
+		fmt.Println(filename + "created successfully")
 	}}
 
 func init() {

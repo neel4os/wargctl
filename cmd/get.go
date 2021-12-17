@@ -18,4 +18,5 @@ func init() {
 	rootCmd.AddCommand(GetCmd)
 	GetCmd.AddCommand(get.GetOrgCmd)
 	GetCmd.AddCommand(get.GetWsCmd)
+	GetCmd.AddCommand(get.GetExpCmd)
 }
